@@ -1,0 +1,3 @@
+(function () {
+    KT.salute();
+})();
