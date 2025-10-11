@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "ES3",
+        "target": "ES2015",
         "module": "CommonJS",
         "outDir": "./dist",
         "rootDir": "./src",
@@ -12,6 +12,7 @@
         "sourceMap": true,
         "types": [
             "./src/lib/json2",
+            "./src/lib/patterns",
             "./node_modules/types-for-adobe/shared/global",
             "./node_modules/types-for-adobe/shared/JavaScript"
         ]

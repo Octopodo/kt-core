@@ -1,9 +1,11 @@
-export class KT {
-    private name = 'KtCore';
-    private version = '1.0.0';
+import { KT_Paterns } from "./patterns";
 
+export class KT {
+    private name = "KtCore";
+    private version = "1.0.0";
+    public static patterns = KT_Paterns;
     static salute() {
-        const obj = { name: 'KtCore', version: '1.0.0' };
+        const obj = { name: "KtCore", version: "1.0.0" };
         alert(JSON.stringify(obj));
         alert(`Hello from ${this.name} `);
     }
