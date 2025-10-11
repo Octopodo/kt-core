@@ -1,10 +1,8 @@
-declare var _: any;
-
 const __KT_Patterns: any = {
     ExtendObject: function (obj: any, extension: any) {
         for (let i in extension) {
             if (!obj[i]) {
-                if (_.isFunction(extension[i])) {
+                if (typeof extension[i] === "function") {
                     obj[i] = function () {
                         return extension[i].apply(obj, arguments);
                     };
@@ -62,7 +60,18 @@ const __KT_Patterns: any = {
             );
         }
 
-        let methods = _.flatten(Array.prototype.slice.call(arguments, 1));
+        function flatten(arr: any[]): any[] {
+            var result: any[] = [];
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] instanceof Array) {
+                    result = result.concat(flatten(arr[i]));
+                } else {
+                    result.push(arr[i]);
+                }
+            }
+            return result;
+        }
+        let methods = flatten(Array.prototype.slice.call(arguments, 1));
 
         this.name = name;
         this.methods = [];
@@ -89,7 +98,7 @@ const __KT_Patterns: any = {
                 cons = subClass.prototype.init.apply(this, args),
                 arr: any = [];
             arr.push.apply(arr, cons);
-            if (_.isFunction(subClass.prototype.configure)) {
+            if (typeof subClass.prototype.configure === "function") {
                 subClass.prototype.configure.apply(arr, args);
             }
             arr.__proto__ = subArray.prototype;
@@ -145,4 +154,4 @@ __KT_Patterns.Interface.implements = function (object: any) {
     }
 };
 
-export const KT_Paterns = new __KT_Patterns();
+export const KT_Paterns = __KT_Patterns;
