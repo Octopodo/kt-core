@@ -37,15 +37,36 @@ const __KT_Patterns: any = {
         if (arguments[2]) {
             // Only give certain methods.
             for (let i = 2, len = arguments.length; i < len; i++) {
-                receivingClass.prototype[arguments[i]] =
-                    givingClass.prototype[arguments[i]];
+                let methodName = arguments[i];
+                if (typeof givingClass.prototype[methodName] === "function") {
+                    receivingClass.prototype[methodName] = function () {
+                        return givingClass.prototype[methodName].apply(
+                            this,
+                            arguments
+                        );
+                    };
+                } else {
+                    receivingClass.prototype[methodName] =
+                        givingClass.prototype[methodName];
+                }
             }
         } else {
             // Give all methods.
             for (let methodName in givingClass.prototype) {
                 if (!receivingClass.prototype[methodName]) {
-                    receivingClass.prototype[methodName] =
-                        givingClass.prototype[methodName];
+                    if (
+                        typeof givingClass.prototype[methodName] === "function"
+                    ) {
+                        receivingClass.prototype[methodName] = function () {
+                            return givingClass.prototype[methodName].apply(
+                                this,
+                                arguments
+                            );
+                        };
+                    } else {
+                        receivingClass.prototype[methodName] =
+                            givingClass.prototype[methodName];
+                    }
                 }
             }
         }
