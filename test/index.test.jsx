@@ -1,2 +1,2 @@
-#include "./../dist/index.js";
-#include "KtCore.test.jsx";
+
+#include "patterns.mixin.test.jsx";
