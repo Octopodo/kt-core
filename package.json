@@ -7,7 +7,8 @@
     "license": "MIT",
     "scripts": {
         "build": "kt-build",
-        "build-tests": "kt-build build-tests"
+        "build-tests": "kt-build build-tests",
+        "debug-build-tests": "kt-build debug-build-tests"
     },
     "files": [
         "src",
@@ -19,6 +20,7 @@
     },
     "devDependencies": {
         "kt-extendscript-builder": "^1.0.0",
+        "kt-testing-suite-core": "^1.7.7",
         "prettier": "^3.6.2"
     }
 }
