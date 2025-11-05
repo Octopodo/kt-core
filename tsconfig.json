@@ -12,6 +12,7 @@
         "sourceMap": true,
         "types": [
             "./src/lib/json2",
+            "./src/lib/es-shim",
             "./src/lib/patterns",
             "./node_modules/types-for-adobe/shared/global",
             "./node_modules/types-for-adobe/shared/JavaScript"

@@ -19,10 +19,14 @@ describe("Mixin Function Tests", () => {
         });
 
         it("should preserve this context in copied methods", () => {
-            function GivingClass() {}
-            GivingClass.prototype.getValue = function () {
-                return (this as any).value;
-            };
+            class GivingClass {
+                method1() {
+                    return "GivingClass value";
+                }
+                method2() {
+                    return this.method1();
+                }
+            }
 
             function ReceivingClass(this: any) {
                 this.value = "receiving class value";
@@ -31,7 +35,7 @@ describe("Mixin Function Tests", () => {
             KT_Paterns.Mixin(ReceivingClass, GivingClass);
 
             const instance = new (ReceivingClass as any)();
-            expect(instance.getValue()).toBe("receiving class value");
+            expect(instance.method2()).toBe("GivingClass value");
         });
 
         it("should copy multiple methods", () => {
