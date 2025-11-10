@@ -3,5 +3,6 @@
 
 import { KT_Core } from "./KtCore";
 import { KT_Paterns } from "./patterns";
-
-export { KT_Core, KT_Paterns };
+import { KT_StringUtils } from "./stringUtils";
+import { KT_FilterChainFactory } from "./FilterChainFactory";
+export { KT_Core, KT_Paterns, KT_StringUtils, KT_FilterChainFactory };
