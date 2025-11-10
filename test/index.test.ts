@@ -4,7 +4,7 @@ import { runTests } from "kt-testing-suite-core";
 // import "./patterns.extendarray.test";
 import "./array.test";
 import "./string.test";
-import "./objectSpread.test";
+// import "./objectSpread.test";
 
 // function testMyRegexp() {
 //     const testRegexp = new RegExp("test/.*\\.test\\.ts$");

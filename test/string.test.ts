@@ -162,4 +162,22 @@ describe("KT_StringUtils Tests", () => {
             expect(result).toBe(false);
         });
     });
+
+    describe("Native string methods shim tests", () => {
+        it("should correctly use String.prototype.includes", () => {
+            const str = "HelloWorld";
+            const result = str.includes("World");
+            expect(result).toBe(true);
+        });
+        it("should correctly use String.prototype.toLowerCase", () => {
+            const str = "HelloWorld";
+            const result = str.toLowerCase();
+            expect(result).toBe("helloworld");
+        });
+        it("should correctly use String.prototype.toUpperCase", () => {
+            const str = "HelloWorld";
+            const result = str.toUpperCase();
+            expect(result).toBe("HELLOWORLD");
+        });
+    });
 });

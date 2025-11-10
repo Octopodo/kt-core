@@ -10,6 +10,7 @@ interface Array<T> {
     ): U[];
 
     indexOf(searchElement: T, fromIndex?: number): number;
+    includes(searchElement: T, fromIndex?: number): boolean;
 }
 
 interface ArrayConstructor {
@@ -26,4 +27,10 @@ interface ObjectConstructor {
         obj: T,
         prop: PropertyKey
     ): PropertyDescriptor | undefined;
+}
+
+interface String {
+    includes(searchString: string, position?: number): boolean;
+    toLowerCase(): string;
+    toUpperCase(): string;
 }
