@@ -34,4 +34,9 @@ describe("Object Spread", () => {
         const combined = [...arr1, ...arr2];
         expect(combined).toEqual([1, 2, 3, 4, 5, 6]);
     });
+    it("shoud use hasOwnProperty from Object ", () => {
+        const obj = { a: 1, b: 2 };
+        expect(obj.hasOwnProperty("a")).toBe(true);
+        expect(obj.hasOwnProperty("c")).toBe(false);
+    });
 });

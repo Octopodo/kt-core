@@ -10,9 +10,15 @@ interface Array<T> {
     ): U[];
 
     indexOf(searchElement: T, fromIndex?: number): number;
-    isArray(arg: any): arg is T[];
 }
 
+interface ArrayConstructor {
+    isArray(arg: any): arg is any[];
+}
+
+interface Object {
+    hasOwnProperty(prop: PropertyKey): boolean;
+}
 interface ObjectConstructor {
     keys<T extends object>(obj: T): (keyof T)[];
 
