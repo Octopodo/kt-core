@@ -141,14 +141,6 @@ class KT_FilterChainFactory {
                     : [];
         }
 
-        // Include and normalize comps to array if present
-        if (inputOptions.comps) {
-            sanitized.comps =
-                inputOptions.comps instanceof Array
-                    ? inputOptions.comps
-                    : [inputOptions.comps];
-        }
-
         return sanitized;
     }
 
