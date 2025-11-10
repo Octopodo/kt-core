@@ -1,5 +1,4 @@
 import { KT_Paterns } from "./patterns";
-import "./es-shim";
 class __KT_Core {
     private name = "KtCore";
     private version = "1.0.0";
