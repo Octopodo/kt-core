@@ -8,6 +8,9 @@ interface Array<T> {
         callback: (element: T, index: number, array: T[]) => U,
         thisArg?: any
     ): U[];
+
+    indexOf(searchElement: T, fromIndex?: number): number;
+    isArray(arg: any): arg is T[];
 }
 
 interface ObjectConstructor {
