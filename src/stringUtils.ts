@@ -3,10 +3,12 @@ import ts from "typescript";
 class KT_StringUtils {
     // Helper function to extract flags from RegExp as string (compatible with ExtendScript)
     private static getFlags(reg: RegExp): string {
-        // @ts-ignore
         return (
+            // @ts-ignore
             (reg.global ? "g" : "") +
+            // @ts-ignore
             (reg.ignoreCase ? "i" : "") +
+            // @ts-ignore
             (reg.multiline ? "m" : "")
         );
     }

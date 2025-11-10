@@ -20,20 +20,22 @@ class KT_FilterChainFactory {
 
     private __initCommonModes(): void {
         this.commonModes = {
-            exact: (itemValue, filters, caseSensitive) => {
-                for (let f = 0; f < filters.length; f++) {
-                    const filter = filters[f];
+            // En commonModes.exact:
+            exact: function exact(itemValue, filters, caseSensitive) {
+                for (var f = 0; f < filters.length; f++) {
+                    var filter = filters[f];
                     if (filter instanceof RegExp) {
                         if (filter.test(itemValue)) return true;
                     } else {
-                        const str = filter as string;
-                        const lowerItem = caseSensitive
-                            ? itemValue
-                            : itemValue.toLowerCase();
-                        const lowerFilter = caseSensitive
-                            ? str
-                            : str.toLowerCase();
-                        if (lowerItem === lowerFilter) return true;
+                        // Usar KT_StringUtils.equals en lugar de toLowerCase
+                        if (
+                            KT_StringUtils.equals(
+                                itemValue,
+                                filter,
+                                caseSensitive
+                            )
+                        )
+                            return true;
                     }
                 }
                 return false;

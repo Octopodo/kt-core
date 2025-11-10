@@ -21,6 +21,30 @@ if (!Array.prototype.forEach) {
     };
 }
 
+if (!Array.prototype.filter) {
+    Array.prototype.filter = function (callback, thisArg) {
+        if (this == null) {
+            throw new TypeError(
+                "Array.prototype.filter called on null or undefined"
+            );
+        }
+        if (typeof callback !== "function") {
+            throw new TypeError(callback + " is not a function");
+        }
+        var arr = Object(this);
+        var len = arr.length >>> 0;
+        var result = [];
+        for (var i = 0; i < len; i++) {
+            if (i in arr) {
+                if (callback.call(thisArg, arr[i], i, arr)) {
+                    result.push(arr[i]);
+                }
+            }
+        }
+        return result;
+    };
+}
+
 if (!Array.prototype.map) {
     Array.prototype.map = function (callback, thisArg) {
         if (this == null) {

@@ -8,6 +8,10 @@ interface Array<T> {
         callback: (element: T, index: number, array: T[]) => U,
         thisArg?: any
     ): U[];
+    filter(
+        callback: (element: T, index: number, array: T[]) => boolean,
+        thisArg?: any
+    ): T[];
 
     indexOf(searchElement: T, fromIndex?: number): number;
     includes(searchElement: T, fromIndex?: number): boolean;
