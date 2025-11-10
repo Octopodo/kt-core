@@ -1,6 +1,6 @@
 {
     "name": "kt-core",
-    "version": "1.0.13",
+    "version": "1.1.0",
     "description": "",
     "author": "Miguel de Mendoza",
     "main": "src/index.ts",
