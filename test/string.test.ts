@@ -86,6 +86,31 @@ describe("KT_StringUtils Tests", () => {
             );
             expect(result).toBe(true);
         });
+        it("should match equals method correctly", () => {
+            const result = KT_StringUtils.equals(
+                "HelloWorld",
+                "HelloWorld",
+                true
+            );
+            expect(result).toBe(true);
+        });
+        it("should match equals method with case insensitivity", () => {
+            const result = KT_StringUtils.equals(
+                "HelloWorld",
+                "helloworld",
+                false
+            );
+            expect(result).toBe(true);
+        });
+
+        it("should accept RegExp as search parameter", () => {
+            const result = KT_StringUtils.startsWith(
+                "HelloWorld",
+                /^hello/i,
+                true
+            );
+            expect(result).toBe(true);
+        });
     });
 
     // Edge Case Tests
@@ -104,6 +129,16 @@ describe("KT_StringUtils Tests", () => {
         });
         it("should return false for match when search string is longer", () => {
             const result = KT_StringUtils.match("Hi", "Hello", true);
+            expect(result).toBe(false);
+        });
+        //test regexp edge cases
+        it("should return false for startsWith when RegExp matches longer string", () => {
+            const result = KT_StringUtils.startsWith("Hi", /Hello/, true);
+            expect(result).toBe(false);
+        });
+
+        it("should return false for endsWith when RegExp dont match the end", () => {
+            const result = KT_StringUtils.endsWith("elloHi", /ello$/, true);
             expect(result).toBe(false);
         });
     });
