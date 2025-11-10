@@ -141,15 +141,24 @@ class KT_FilterChainFactory {
                     : [];
         }
 
+        // Extract caseSensitive option
+        sanitized.caseSensitive = inputOptions.caseSensitive || false;
+
         return sanitized;
     }
 
     // ... existing code ...
 
     filter(item: any, sanitized: any, caseSensitive = false): boolean {
+        // Use caseSensitive from sanitized if available, otherwise use parameter
+        const useCaseSensitive =
+            sanitized.caseSensitive !== undefined
+                ? sanitized.caseSensitive
+                : caseSensitive;
+
         for (const key in sanitized) {
             if (!sanitized.hasOwnProperty(key)) continue;
-            if (key === "comps") continue;
+            if (key === "comps" || key === "caseSensitive") continue;
             if (sanitized[key].length === 0) continue;
 
             if (typeof this.template[key] === "function") {
@@ -164,13 +173,19 @@ class KT_FilterChainFactory {
                     const fn = this.commonModes[mode];
                     const itemValue =
                         item[key] !== undefined ? item[key] : item.name;
-                    const match = fn(itemValue, sanitized[key], caseSensitive);
+                    const match = fn(
+                        itemValue,
+                        sanitized[key],
+                        useCaseSensitive
+                    );
                     if (!match) return false;
                 }
             }
         }
         return true;
     }
+
+    // ... existing code ...
 
     match(item: any, options: any, caseSensitive = false): boolean {
         const sanitized = this.sanitize(options);
