@@ -98,12 +98,18 @@ class KT_FilterChainFactory {
         };
     }
 
-    sanitize(options: any): any {
-        const sanitized: any = {};
+    // ... existing code ...
 
-        // Single param assignment to first key
+    sanitize(options: any): any {
+        if (!options) return {};
+
+        const sanitized: any = {};
         let inputOptions = options;
-        if (
+
+        // Single param assignment
+        if (typeof options === "number") {
+            inputOptions = { id: options };
+        } else if (
             typeof options === "string" ||
             options instanceof RegExp ||
             options instanceof Array
@@ -115,16 +121,24 @@ class KT_FilterChainFactory {
                     break;
                 }
             }
-            if (firstKey) {
+            if (
+                typeof options === "string" &&
+                KT_StringUtils.startsWith(options, "//", true)
+            ) {
+                inputOptions = { path: options };
+            } else if (firstKey) {
                 inputOptions = { [firstKey]: options };
             }
         }
 
-        // Set defaults for all template keys
+        // Set defaults for all template keys - ensure we're using the corrected inputOptions
         for (const key in this.template) {
             if (!this.template.hasOwnProperty(key)) continue;
             const value = inputOptions[key];
-            sanitized[key] = value !== undefined ? this.__toArray(value) : [];
+            sanitized[key] =
+                value !== undefined && value !== null
+                    ? this.__toArray(value)
+                    : [];
         }
 
         // Include and normalize comps to array if present
@@ -138,20 +152,21 @@ class KT_FilterChainFactory {
         return sanitized;
     }
 
+    // ... existing code ...
+
     filter(item: any, sanitized: any, caseSensitive = false): boolean {
         for (const key in sanitized) {
             if (!sanitized.hasOwnProperty(key)) continue;
-            if (key === "comps") continue; // Skip non-filter keys
-            if (sanitized[key].length === 0) continue; // Skip empty filters
+            if (key === "comps") continue;
+            if (sanitized[key].length === 0) continue;
 
             if (typeof this.template[key] === "function") {
-                // Custom filter function - pass item and expected value directly
+                // Custom filter - pass entire array, let function decide how to use it
                 const fn = this.template[key] as any;
-                const expected = sanitized[key][0];
-                const match = fn(item, expected);
+                const match = fn(item, sanitized[key]);
                 if (!match) return false;
             } else {
-                // Common mode filter - use itemValue
+                // Common mode filter
                 let mode = key === "name" || key === "type" ? "exact" : key;
                 if (mode in this.commonModes) {
                     const fn = this.commonModes[mode];
@@ -159,8 +174,6 @@ class KT_FilterChainFactory {
                         item[key] !== undefined ? item[key] : item.name;
                     const match = fn(itemValue, sanitized[key], caseSensitive);
                     if (!match) return false;
-                } else {
-                    continue;
                 }
             }
         }
@@ -177,7 +190,8 @@ class KT_FilterChainFactory {
         if (
             typeof value === "string" ||
             value instanceof RegExp ||
-            typeof value === "boolean"
+            typeof value === "boolean" ||
+            typeof value === "number"
         )
             return [value];
         if (typeof value === "function") return [value];
