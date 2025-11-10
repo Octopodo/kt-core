@@ -1,2 +1,10 @@
 tsconfig.json.backup
 !tsconfig.json
+test/
+.github/
+.vscode/
+dist.test/
+docs/
+CONTRIBUTING.md
+README.md
+DOCS_COMPLETE.md
