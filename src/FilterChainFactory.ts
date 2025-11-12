@@ -204,6 +204,8 @@ class KT_FilterChainFactory {
         )
             return [value];
         if (typeof value === "function") return [value];
+        // Allow objects (like FolderItem for root)
+        if (typeof value === "object" && value !== null) return [value];
         return [];
     }
 }
