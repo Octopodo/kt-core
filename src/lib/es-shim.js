@@ -88,6 +88,29 @@ if (!Array.prototype.indexOf) {
     };
 }
 
+if (!Array.prototype.every) {
+    Array.prototype.every = function (callback, thisArg) {
+        if (this == null) {
+            throw new TypeError(
+                "Array.prototype.every called on null or undefined"
+            );
+        }
+        if (typeof callback !== "function") {
+            throw new TypeError(callback + " is not a function");
+        }
+        var arr = Object(this);
+        var len = arr.length >>> 0;
+        for (var i = 0; i < len; i++) {
+            if (i in arr) {
+                if (!callback.call(thisArg, arr[i], i, arr)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+}
+
 if (!Object.keys) {
     Object.keys = function (obj) {
         if (obj !== Object(obj)) {

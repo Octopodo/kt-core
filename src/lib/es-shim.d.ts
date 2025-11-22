@@ -12,6 +12,10 @@ interface Array<T> {
         callback: (element: T, index: number, array: T[]) => boolean,
         thisArg?: any
     ): T[];
+    every(
+        callback: (element: T, index: number, array: T[]) => boolean,
+        thisArg?: any
+    ): boolean;
 
     indexOf(searchElement: T, fromIndex?: number): number;
     includes(searchElement: T, fromIndex?: number): boolean;
