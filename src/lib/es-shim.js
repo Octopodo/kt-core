@@ -66,6 +66,27 @@ if (!Array.prototype.map) {
         return result;
     };
 }
+if (!Array.prototype.find) {
+    Array.prototype.find = function (predicate, thisArg) {
+        if (this == null) {
+            throw new TypeError('"this" is null or not defined');
+        }
+        var o = Object(this);
+        var len = o.length >>> 0;
+        if (typeof predicate !== "function") {
+            throw new TypeError("predicate must be a function");
+        }
+        var k = 0;
+        while (k < len) {
+            var kValue = o[k];
+            if (predicate.call(thisArg, kValue, k, o)) {
+                return kValue;
+            }
+            k++;
+        }
+        return undefined;
+    };
+}
 if (!Array.prototype.includes) {
     Array.prototype.includes = function (searchElement, fromIndex) {
         if (this == null) {
@@ -132,6 +153,44 @@ if (!Array.prototype.every) {
     };
 }
 
+if (!Array.prototype.some) {
+    Array.prototype.some = function (callback, thisArg) {
+        if (this == null) {
+            throw new TypeError(
+                "Array.prototype.some called on null or undefined"
+            );
+        }
+        if (typeof callback !== "function") {
+            throw new TypeError(callback + " is not a function");
+        }
+        var arr = Object(this);
+        var len = arr.length >>> 0;
+        for (var i = 0; i < len; i++) {
+            if (i in arr) {
+                if (callback.call(thisArg, arr[i], i, arr)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+}
+
+if (!Array.from) {
+    Array.from = function (iterable) {
+        if (iterable == null) {
+            throw new TypeError(
+                "Array.from requires an array-like object - not null or undefined"
+            );
+        }
+        var result = [];
+        for (var i = 0; i < iterable.length; i++) {
+            result.push(iterable[i]);
+        }
+        return result;
+    };
+}
+
 if (!Object.keys) {
     Object.keys = function (obj) {
         if (obj !== Object(obj)) {
@@ -144,6 +203,21 @@ if (!Object.keys) {
             }
         }
         return keys;
+    };
+}
+
+if (!Object.values) {
+    Object.values = function (obj) {
+        if (obj !== Object(obj)) {
+            throw new TypeError("Object.values called on a non-object");
+        }
+        var values = [];
+        for (var key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                values.push(obj[key]);
+            }
+        }
+        return values;
     };
 }
 

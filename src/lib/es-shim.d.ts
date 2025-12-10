@@ -19,14 +19,24 @@ interface Array<T> {
 
     indexOf(searchElement: T, fromIndex?: number): number;
     includes(searchElement: T, fromIndex?: number): boolean;
+    find(
+        predicate: (element: T, index: number, array: T[]) => boolean,
+        thisArg?: any
+    ): T | undefined;
+    some(
+        predicate: (element: T, index: number, array: T[]) => boolean,
+        thisArg?: any
+    ): boolean;
 }
 
 interface ArrayConstructor {
     isArray(arg: any): arg is any[];
+    from<T>(iterable: ArrayLike<T>): T[];
 }
 
 interface Object {
     hasOwnProperty(prop: PropertyKey): boolean;
+    values<T extends object>(obj: T): T[keyof T][];
 }
 interface ObjectConstructor {
     keys<T extends object>(obj: T): (keyof T)[];
