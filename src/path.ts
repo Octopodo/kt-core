@@ -5,8 +5,9 @@
  * (like After Effects or Premiere Pro) in a host-agnostic way.
  * Paths use a configurable separator (defaulting to "//") to avoid conflicts.
  */
+import { KT_StringUtils as KT_String } from "./stringUtils";
 
-export interface IPathAdapter<T> {
+export interface KT_IPathAdapter<T> {
     separator: string;
     /**
      * Returns true if the item can contain other items (e.g. Folder, Bin).
@@ -27,9 +28,9 @@ export interface IPathAdapter<T> {
 }
 
 export class KT_ProjectPath<T> {
-    private adapter: IPathAdapter<T>;
+    private adapter: KT_IPathAdapter<T>;
 
-    constructor(adapter: IPathAdapter<T>) {
+    constructor(adapter: KT_IPathAdapter<T>) {
         this.adapter = adapter;
     }
 
@@ -68,6 +69,7 @@ export class KT_ProjectPath<T> {
         if (!this.adapter.isContainer(root)) return;
 
         const children: T[] = this.adapter.getChildren(root);
+        //@ts-ignore
         for (const item of children) {
             callback(item);
             if (this.adapter.isContainer(item)) {
@@ -99,6 +101,7 @@ export class KT_ProjectPath<T> {
         const segments = this.parse(path);
         let current: T = root;
 
+        //@ts-ignore
         for (const segment of segments) {
             if (!this.adapter.isContainer(current)) {
                 return null;
@@ -128,20 +131,32 @@ export class KT_ProjectPath<T> {
         return this.adapter.separator + segments.join(this.adapter.separator);
     };
 
-    getNameFromPath = (path: string): string => {
+    getName = (path: string): string => {
         const segments = this.parse(path);
         return segments.length > 0 ? segments[segments.length - 1] : "";
+    };
+
+    getChildren = (item: T): T[] => {
+        return this.adapter.getChildren(item);
     };
 
     isAbsolute = (path: string): boolean => {
         return path.indexOf(this.adapter.separator) === 0;
     };
+    isContainer = (item: T): boolean => {
+        return this.adapter.isContainer(item);
+    };
 
     normalize = (path: string): string => {
         const sep = this.adapter.separator;
-        // Remove leading/trailing separators, collapse multiple separators
-        let normalized = path.replace(
-            new RegExp(sep.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "+", "g"), // Escape regex specials
+
+        // 1. Unify separators: Replace backslashes (and single slashes if sep is different) with standard separator
+        // We explicitly target "\" to handle Windows/Premiere paths.
+        let normalized = path.replace(/\\/g, sep);
+
+        // 2. Collapse multiple separators
+        normalized = normalized.replace(
+            new RegExp(sep.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "+", "g"),
             sep
         );
 
@@ -149,7 +164,7 @@ export class KT_ProjectPath<T> {
             normalized = normalized.slice(sep.length);
         }
 
-        if (normalized.endsWith(sep)) {
+        if (KT_String.endsWith(normalized, sep)) {
             normalized = normalized.slice(0, -sep.length);
         }
 
