@@ -1,5 +1,5 @@
 import { it, expect, describe } from "kt-testing-suite-core";
-import { IPathAdapter, KT_ProjectPath } from "../src/path";
+import { KT_IPathAdapter, KT_ProjectPath } from "../src/path";
 
 describe("Path Adapter", () => {
     interface TestItem {
@@ -7,7 +7,7 @@ describe("Path Adapter", () => {
         parent: TestItem | null;
         children?: TestItem[];
     }
-    const adapter: IPathAdapter<TestItem> = {
+    const adapter: KT_IPathAdapter<TestItem> = {
         separator: "//",
         isContainer: (item: TestItem) => !!item.children,
         getName: (item: TestItem) => item.name,
