@@ -1,20 +1,19 @@
 # KT_Core
 
-Central singleton container for the library. Use it to register runtime modules and access shared utilities (patterns, etc.).
+Central singleton container for the library. Use it to register runtime modules and access shared utilities.
 
 ## API
 
-| Property / Method | Signature                             | Description                                                |
-| ----------------- | ------------------------------------- | ---------------------------------------------------------- |
-| `patterns`        | `KT_Paterns` (via `KT_Core.patterns`) | Access OOP helpers (Extend, Mixin, Clone, ExtendObject)    |
-| `Module`          | `(name: string, module: any): void`   | Register a module at runtime (assigned to `KT_Core[name]`) |
-| `init`            | `(): string`                          | Initialize core (returns module name)                      |
-| `salute`          | `(): void`                            | Show simple diagnostics (alerts/logs)                      |
+| Property / Method | Signature                           | Description                                                |
+| ----------------- | ----------------------------------- | ---------------------------------------------------------- |
+| `Module`          | `(name: string, module: any): void` | Register a module at runtime (assigned to `KT_Core[name]`) |
+| `init`            | `(): string`                        | Initialize core (returns module name)                      |
+| `salute`          | `(): void`                          | Show simple diagnostics (alerts/logs)                      |
 
 ## Example
 
 ```typescript
-import { KT_Core, KT_StringUtils } from "kt-core";
+import { KT_Core, [KT_StringUtils](../stringUtils.md) } from "kt-core";
 
 // Register a module
 KT_Core.Module("Utils", {
@@ -23,22 +22,17 @@ KT_Core.Module("Utils", {
     },
 });
 console.log((KT_Core as any).Utils.greet("World")); // Hello World
-
-// Use patterns via core
-KT_Core.patterns.Extend(
-    function Child() {},
-    function Parent() {}
-);
 ```
 
 Notes:
 
-- Access patterns through `KT_Core.patterns`. Do not import `Paterns` directly from the package root.
 - Keep module names unique to avoid registration conflicts.
+
+# ⚙️ `init(): string`
 
 Initialize the KT_Core module and return its name.
 
-**Signature:**
+#### Function Signature
 
 ```typescript
 init(): string
@@ -53,11 +47,11 @@ const moduleName = KT_Core.init();
 console.log(moduleName); // "KtCore"
 ```
 
-### `Module(name, module)`
+# ⚙️ `Module(name: string, module: any): void`
 
 Register a new module with the KT_Core container at runtime. This allows for composition and extension of the library.
 
-**Signature:**
+#### Function Signature
 
 ```typescript
 Module(name: string, module: any): void
@@ -92,11 +86,11 @@ KT_Core.Module("Utils", new CustomUtils());
 const result = KT_Core.Utils.greet("World"); // "Hello, World!"
 ```
 
-### `salute()`
+# ⚙️ `salute(): void`
 
 Display library information via an alert dialog. Used for diagnostics and verification.
 
-**Signature:**
+#### Function Signature
 
 ```typescript
 salute(): void
@@ -116,29 +110,6 @@ KT_Core.salute();
 ```
 
 ## Usage Examples
-
-### Basic Usage
-
-```typescript
-import { KT_Core, KT_StringUtils } from "kt-core";
-
-// Access patterns through KT_Core
-class Animal {
-    constructor(public name: string) {}
-}
-
-class Dog {
-    bark(): string {
-        return "Woof!";
-    }
-}
-
-KT_Core.patterns.Extend(Dog, Animal);
-
-const myDog = new Dog();
-myDog.name = "Buddy";
-myDog.bark(); // "Woof!"
-```
 
 ### Runtime Module Composition
 
@@ -256,5 +227,4 @@ Check: Does name already exist?
 ## Related Documentation
 
 - 📖 [Main README](../README.md)
-- 📖 [Patterns Documentation](./patterns.md)
 - 📖 [String Utilities Documentation](./stringUtils.md)

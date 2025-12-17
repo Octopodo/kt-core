@@ -27,7 +27,6 @@ factory.match({ name: "John" }, { name: "Jo" }); // true
 - [KtCore.md](./KtCore.md) - Core module
 - [stringUtils.md](./stringUtils.md) - String utilities
 - [FilterChainFactory.md](./FilterChainFactory.md) - Filtering
-- [patterns.md](./patterns.md) - OOP patterns
   | ------------------------------------------ | --------------------------------------- | ---------------- |
   | **[README.md](./README.md)** | Project overview, features, quick start | First-time users |
   | **[CONTRIBUTING.md](./CONTRIBUTING.md)** | Development guide, code standards | Contributors |
@@ -40,7 +39,6 @@ factory.match({ name: "John" }, { name: "Jo" }); // true
 | **[KtCore.md](./docs/KtCore.md)**                         | KT_Core               | 6.2K  | Understanding the main module |
 | **[stringUtils.md](./docs/stringUtils.md)**               | KT_StringUtils        | 11.6K | String matching operations    |
 | **[FilterChainFactory.md](./docs/FilterChainFactory.md)** | KT_FilterChainFactory | 16.5K | Collection filtering          |
-| **[patterns.md](./docs/patterns.md)**                     | KT_Paterns            | 13.8K | OOP patterns                  |
 | **[batch.md](./docs/batch.md)**                           | Batch Utilities       | 8.3K  | Batch operations              |
 
 ### Reference & Navigation (in `/docs`)
@@ -65,7 +63,6 @@ factory.match({ name: "John" }, { name: "Jo" }); // true
 <tr><td><strong>Understand KT_Core</strong></td><td>→ Read <a href="./docs/KtCore.md">docs/KtCore.md</a></td></tr>
 <tr><td><strong>Use string matching</strong></td><td>→ Read <a href="./docs/stringUtils.md">docs/stringUtils.md</a></td></tr>
 <tr><td><strong>Filter collections</strong></td><td>→ Read <a href="./docs/FilterChainFactory.md">docs/FilterChainFactory.md</a></td></tr>
-<tr><td><strong>Use OOP patterns</strong></td><td>→ Read <a href="./docs/patterns.md">docs/patterns.md</a></td></tr>
 <tr><td><strong>Batch operations</strong></td><td>→ Read <a href="./docs/batch.md">docs/batch.md</a></td></tr>
 <tr><td><strong>Contribute code</strong></td><td>→ Read <a href="./CONTRIBUTING.md">CONTRIBUTING.md</a></td></tr>
 <tr><td><strong>Learn ExtendScript rules</strong></td><td>→ Read <a href="./.github/copilot-instructions.md">.github/copilot-instructions.md</a></td></tr>
@@ -101,7 +98,6 @@ kt-core/
 │   ├── KtCore.md                    # KT_Core module
 │   ├── stringUtils.md               # String utilities
 │   ├── FilterChainFactory.md        # Filter factory
-│   ├── patterns.md                  # OOP patterns
 │   └── batch.md                     # Batch utilities
 │
 ├── .github/
@@ -186,7 +182,6 @@ kt-core/
 - **KT_Core** → [docs/KtCore.md](./docs/KtCore.md)
 - **KT_StringUtils** → [docs/stringUtils.md](./docs/stringUtils.md)
 - **KT_FilterChainFactory** → [docs/FilterChainFactory.md](./docs/FilterChainFactory.md)
-- **KT_Paterns** → [docs/patterns.md](./docs/patterns.md)
 - **Batch Utilities** → [docs/batch.md](./docs/batch.md)
 
 ### By Method Name
@@ -201,11 +196,6 @@ kt-core/
 | `match()`          | Filter Factory | [FilterChainFactory.md](./docs/FilterChainFactory.md#match)    |
 | `filter()`         | Filter Factory | [FilterChainFactory.md](./docs/FilterChainFactory.md#filter)   |
 | `sanitize()`       | Filter Factory | [FilterChainFactory.md](./docs/FilterChainFactory.md#sanitize) |
-| `Extend()`         | Patterns       | [patterns.md](./docs/patterns.md#extend)                       |
-| `Mixin()`          | Patterns       | [patterns.md](./docs/patterns.md#mixin)                        |
-| `Clone()`          | Patterns       | [patterns.md](./docs/patterns.md#clone)                        |
-| `ExtendObject()`   | Patterns       | [patterns.md](./docs/patterns.md#extendobject)                 |
-| `Interface()`      | Patterns       | [patterns.md](./docs/patterns.md#interface)                    |
 | `Module()`         | Core           | [KtCore.md](./docs/KtCore.md#module)                           |
 | `init()`           | Core           | [KtCore.md](./docs/KtCore.md#init)                             |
 | `createBatchJob()` | Batch          | [batch.md](./docs/batch.md#createbatchjob)                     |

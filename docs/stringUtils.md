@@ -32,11 +32,20 @@ Notes:
 
 - String patterns are escaped when converted to RegExp to avoid accidental meta-character matches.
 - When a `RegExp` is provided, flags are reconstructed to accommodate ExtendScript limitations.
-  static startsWith(
-  str: string,
-  search: string | RegExp,
-  caseSensitive?: boolean
-  ): boolean
+
+# ⚙️ `startsWith(str: string, search: string | RegExp, caseSensitive?: boolean): boolean`
+
+Check if a string starts with a specified pattern.
+
+#### Function Signature
+
+```typescript
+static startsWith(
+    str: string,
+    search: string | RegExp,
+    caseSensitive?: boolean
+): boolean
+```
 
 ````
 
@@ -71,11 +80,11 @@ const regex = /^hello/i;
 KT_StringUtils.startsWith("HelloWorld", regex); // true
 ````
 
-### `endsWith()`
+# ⚙️ `endsWith(str: string, search: string | RegExp, caseSensitive?: boolean): boolean`
 
 Check if a string ends with a specified pattern.
 
-**Signature:**
+#### Function Signature
 
 ```typescript
 static endsWith(
@@ -114,11 +123,11 @@ const regex = /world$/i;
 KT_StringUtils.endsWith("HelloWorld", regex); // true
 ```
 
-### `contains()`
+# ⚙️ `contains(str: string, search: string | RegExp, caseSensitive?: boolean): boolean`
 
 Check if a string contains a specified pattern anywhere.
 
-**Signature:**
+#### Function Signature
 
 ```typescript
 static contains(
@@ -157,11 +166,11 @@ const regex = /wo\w+d/i;
 KT_StringUtils.contains("HelloWorld", regex); // true (matches "World")
 ```
 
-### `equals()`
+# ⚙️ `equals(str: string, search: string | RegExp, caseSensitive?: boolean): boolean`
 
 Check if a string exactly equals a specified pattern.
 
-**Signature:**
+#### Function Signature
 
 ```typescript
 static equals(
@@ -199,11 +208,11 @@ const regex = /^adobe$/i;
 KT_StringUtils.equals("Adobe", regex); // true
 ```
 
-### `match()`
+# ⚙️ `match(str: string, search: string | RegExp, caseSensitive?: boolean, flags?: string): boolean`
 
 Match a string against a pattern with optional additional regex flags.
 
-**Signature:**
+#### Function Signature
 
 ```typescript
 static match(

@@ -7,7 +7,6 @@ Complete reference guide for KT-Core modules and APIs.
 - [KT_Core](./KtCore.md) - Central module container
 - [KT_StringUtils](./stringUtils.md) - String matching utilities
 - [KT_FilterChainFactory](./FilterChainFactory.md) - Collection filtering
-- [Patterns](./patterns.md) - OOP patterns (via KT_Core.Paterns)
 
 ## Quick Links
 
@@ -20,9 +19,6 @@ Complete reference guide for KT-Core modules and APIs.
 ```typescript
 // All-in-one
 import { KT_Core, KT_StringUtils, KT_FilterChainFactory } from "kt-core";
-
-// Patterns via core
-const patterns = KT_Core.Paterns;
 ```
 
 - Pattern matching (startsWith, endsWith, contains)
@@ -54,26 +50,6 @@ Advanced collection filtering with template-based customization.
 - `match(item, options, caseSensitive?)` - Filter a single item
 - `filter(item, sanitized, caseSensitive?)` - Apply pre-sanitized filters
 - `sanitize(options)` - Normalize filter options
-
-#### 🏛️ [Patterns](./docs/patterns.md)
-
-Classical OOP patterns for ExtendScript (no ES6 class syntax).
-
-**What it does:**
-
-- Prototype-based inheritance (Extend)
-- Method composition (Mixin)
-- Object cloning (Clone)
-- Object extension (ExtendObject)
-- Interface contracts (Interface)
-
-**Key methods:**
-
-- `Extend(subClass, superClass)` - Inheritance
-- `Mixin(receivingClass, givingClass, ...methods?)` - Composition
-- `Clone(object)` - Prototype cloning
-- `ExtendObject(obj, extension)` - Object extension
-- `Interface(name, ...methods)` - Define contracts
 
 #### 📦 [Batch Utilities](./docs/batch.md)
 
@@ -116,9 +92,7 @@ Lightweight batch operations on collections.
 ### For Advanced Users
 
 1. Study [Filter Chain Factory](./docs/FilterChainFactory.md) - Complex filtering
-2. Learn [OOP Patterns](./docs/patterns.md) - Design patterns
-3. Review [Advanced Examples](./docs/patterns.md#usage-examples) - Complex use cases
-4. Check [Batch Performance](./docs/batch.md#performance-notes) - Optimization
+2. Check [Batch Performance](./docs/batch.md#performance-notes) - Optimization
 
 ## 🚀 Common Tasks
 
@@ -144,12 +118,7 @@ See [Adding Filter Modes](./github/copilot-instructions.md#adding-filter-modes)
 ### Task: Use KT-Core in Your Project
 
 ```typescript
-import {
-    KT_Core,
-    KT_StringUtils,
-    KT_FilterChainFactory,
-    KT_Paterns,
-} from "kt-core";
+import { KT_Core, KT_StringUtils, KT_FilterChainFactory } from "kt-core";
 
 // Use utilities...
 ```
@@ -207,7 +176,6 @@ KT-Core is built specifically for Adobe ExtendScript (IE6-compatible). The libra
 | [KtCore.md](./docs/KtCore.md)                                | KT_Core module documentation            |
 | [stringUtils.md](./docs/stringUtils.md)                      | String utilities documentation          |
 | [FilterChainFactory.md](./docs/FilterChainFactory.md)        | Filter chain documentation              |
-| [patterns.md](./docs/patterns.md)                            | OOP patterns documentation              |
 | [batch.md](./docs/batch.md)                                  | Batch utilities documentation           |
 | [copilot-instructions.md](./.github/copilot-instructions.md) | Detailed development guidelines         |
 
