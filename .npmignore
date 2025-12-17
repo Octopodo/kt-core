@@ -5,6 +5,4 @@ test/
 .vscode/
 dist.test/
 docs/
-CONTRIBUTING.md
-README.md
-DOCS_COMPLETE.md
+.npmignore
