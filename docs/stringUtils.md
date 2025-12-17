@@ -1,59 +1,44 @@
-# KT_StringUtils Module Documentation
+# KT_StringUtils
 
-Comprehensive string utility functions with support for case sensitivity and both string and RegExp patterns. Fully compatible with ExtendScript.
+Utilities for string matching with explicit `caseSensitive` control and support for `string` or `RegExp` search patterns.
 
-## Table of Contents
+## API
 
-- [Overview](#overview)
-- [API Reference](#api-reference)
-- [Methods](#methods)
-- [Usage Examples](#usage-examples)
-- [Extended Features](#extended-features)
-- [ExtendScript Compatibility](#extendscript-compatibility)
+| Method       | Signature                     | Returns                                           | Notes     |
+| ------------ | ----------------------------- | ------------------------------------------------- | --------- | ---------------------------- |
+| `startsWith` | `(str: string, search: string | RegExp, caseSensitive?: boolean)`                 | `boolean` | Pattern at start             |
+| `endsWith`   | `(str: string, search: string | RegExp, caseSensitive?: boolean)`                 | `boolean` | Pattern at end               |
+| `contains`   | `(str: string, search: string | RegExp, caseSensitive?: boolean)`                 | `boolean` | Pattern anywhere             |
+| `equals`     | `(str: string, search: string | RegExp, caseSensitive?: boolean)`                 | `boolean` | Exact match (anchors RegExp) |
+| `match`      | `(str: string, search: string | RegExp, caseSensitive?: boolean, flags?: string)` | `boolean` | RegExp-aware match           |
 
-## Overview
+All methods accept a `string` or `RegExp` for `search`. `caseSensitive` defaults to `true`.
 
-`KT_StringUtils` provides a robust set of string manipulation utilities designed specifically for ExtendScript environments. All methods handle:
-
-- **Case Sensitivity Control**: Optional `caseSensitive` parameter (default: `true`)
-- **Dual Input Types**: Accept both `string` and `RegExp` patterns
-- **RegExp Safety**: Special character escaping and flag reconstruction
-- **IE6 Compatibility**: No modern JavaScript features, ExtendScript-friendly
-
-### Key Features
-
-✨ Built-in pattern matching without external dependencies  
-✨ Consistent API across all methods  
-✨ Automatic RegExp flag handling for ExtendScript  
-✨ Edge case handling (empty strings, null values)
-
-## API Reference
-
-### All Methods
-
-| Method         | Parameters                              | Returns   | Description                         |
-| -------------- | --------------------------------------- | --------- | ----------------------------------- |
-| `startsWith()` | `(str, search, caseSensitive?)`         | `boolean` | Check if string starts with pattern |
-| `endsWith()`   | `(str, search, caseSensitive?)`         | `boolean` | Check if string ends with pattern   |
-| `contains()`   | `(str, search, caseSensitive?)`         | `boolean` | Check if string contains pattern    |
-| `equals()`     | `(str, search, caseSensitive?)`         | `boolean` | Check exact equality                |
-| `match()`      | `(str, search, caseSensitive?, flags?)` | `boolean` | Match with optional regex flags     |
-
-## Methods
-
-### `startsWith()`
-
-Check if a string begins with a specified pattern.
-
-**Signature:**
+## Usage
 
 ```typescript
-static startsWith(
-    str: string,
-    search: string | RegExp,
-    caseSensitive?: boolean
-): boolean
+import { KT_StringUtils } from "kt-core";
+
+KT_StringUtils.startsWith("HelloWorld", "Hello"); // true
+KT_StringUtils.startsWith("HELLO", "hello", false); // true (case-insensitive)
+
+const rx = /^hello/i;
+KT_StringUtils.match("HelloWorld", rx); // true
+
+KT_StringUtils.contains("file.txt", ".txt", false); // true
 ```
+
+Notes:
+
+- String patterns are escaped when converted to RegExp to avoid accidental meta-character matches.
+- When a `RegExp` is provided, flags are reconstructed to accommodate ExtendScript limitations.
+  static startsWith(
+  str: string,
+  search: string | RegExp,
+  caseSensitive?: boolean
+  ): boolean
+
+````
 
 **Parameters:**
 
@@ -84,7 +69,7 @@ KT_StringUtils.startsWith("Test", ""); // false (empty pattern)
 // RegExp support
 const regex = /^hello/i;
 KT_StringUtils.startsWith("HelloWorld", regex); // true
-```
+````
 
 ### `endsWith()`
 

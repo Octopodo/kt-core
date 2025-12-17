@@ -1,53 +1,51 @@
-# KT_Paterns Module Documentation
+# Patterns Module
 
-Classical object-oriented programming patterns for ExtendScript environments. Implements prototypal inheritance, mixins, cloning, and interfaces using IE6-compatible techniques.
+Object-oriented programming patterns for ExtendScript. Access via KT_Core module.
 
-**Note:** The module name is deliberately spelled `KT_Paterns` (not "Patterns") for historical consistency.
+## Available Patterns
 
-## Table of Contents
+| Pattern        | Purpose                      | Signature                                       |
+| -------------- | ---------------------------- | ----------------------------------------------- |
+| `Extend`       | Prototypal inheritance       | `(subClass, superClass)`                        |
+| `Mixin`        | Copy methods between classes | `(receivingClass, givingClass, ...methodNames)` |
+| `Clone`        | Create object clone          | `(object)`                                      |
+| `ExtendObject` | Mix object properties        | `(target, source)`                              |
 
-- [Overview](#overview)
-- [API Reference](#api-reference)
-- [Methods](#methods)
-- [Usage Examples](#usage-examples)
-- [Pattern Implementations](#pattern-implementations)
-- [ExtendScript Compatibility](#extendscript-compatibility)
-
-## Overview
-
-`KT_Paterns` provides classical OOP patterns that don't rely on ES6+ features, making them ideal for ExtendScript environments where class syntax and modern features are unavailable or unreliable.
-
-### Key Patterns Included
-
-- **Inheritance**: `Extend()` - Prototype-based inheritance
-- **Composition**: `Mixin()` - Copy methods from one class to another
-- **Cloning**: `Clone()` - Create object clones using prototype chain
-- **Extension**: `ExtendObject()` - Extend existing objects with new properties
-- **Interfaces**: `Interface()` - Define and validate method contracts
-
-## API Reference
-
-### All Methods
-
-| Method           | Parameters                                   | Returns     | Purpose                            |
-| ---------------- | -------------------------------------------- | ----------- | ---------------------------------- |
-| `Extend()`       | `(subClass, superClass)`                     | `void`      | Set up prototype-based inheritance |
-| `Mixin()`        | `(receivingClass, givingClass, ...methods?)` | `void`      | Copy methods between classes       |
-| `Clone()`        | `(object)`                                   | `object`    | Create a clone via prototype chain |
-| `ExtendObject()` | `(obj, extension)`                           | `void`      | Add properties/methods to object   |
-| `Interface()`    | `(name, ...methods)`                         | `Interface` | Define interface contract          |
-
-## Methods
-
-### `Extend()`
-
-Establish prototype-based inheritance between a subclass and superclass.
-
-**Signature:**
+## Usage
 
 ```typescript
-static Extend(subClass: Function, superClass: Function): void
+// Use patterns via KT_Core.Paterns
+const KT_Core = require("kt-core");
+const Patterns = KT_Core.Paterns;
+
+// Inheritance
+function Animal() {}
+function Dog() {}
+Patterns.Extend(Dog, Animal);
+
+// Mixin (copy methods)
+function Base() {}
+function Helper() {
+    this.help = function () {
+        return "helping";
+    };
+}
+Patterns.Mixin(Base, Helper, "help");
+
+// Clone
+const original = { name: "test" };
+const copy = Patterns.Clone(original);
+
+// Extend object
+Patterns.ExtendObject(target, { newProp: value });
 ```
+
+Notes:
+
+- All patterns use traditional prototypal inheritance (no class syntax)
+- `Mixin` with no method names copies all methods
+- `Clone` creates a new instance with same prototype
+- Compatible with ExtendScript (no modern ES features)
 
 **Parameters:**
 

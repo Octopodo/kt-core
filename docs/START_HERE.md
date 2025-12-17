@@ -1,37 +1,37 @@
-# 📚 KT-Core Complete Documentation Index
+# Getting Started with KT-Core
 
-Welcome to KT-Core documentation! This index helps you navigate all available documentation.
+## Quick Start
 
-## 🏠 Start Here
+1. **Install**: `npm install kt-core`
 
-### For Complete Beginners
+2. **Import modules**:
 
-1. **[README.md](./README.md)** - What is kt-core and what can it do?
-2. **[Quick Start](./README.md#quick-start)** - Get running in 5 minutes
-3. **[docs/QUICK_REFERENCE.md](./docs/QUICK_REFERENCE.md)** - Copy-paste ready examples
+```typescript
+import { KT_Core, KT_StringUtils, KT_FilterChainFactory } from "kt-core";
+```
 
-### For Developers
+3. **Use utilities**:
 
-1. **[CONTRIBUTING.md](./CONTRIBUTING.md)** - How to contribute
-2. **[.github/copilot-instructions.md](./.github/copilot-instructions.md)** - Development guidelines
-3. **[docs/INDEX.md](./docs/INDEX.md)** - Learning paths
+```typescript
+// String matching
+KT_StringUtils.startsWith("HelloWorld", "Hello"); // true
 
-### For Complete Reference
+// Filtering
+const factory = new KT_FilterChainFactory({ name: "startsWith" });
+factory.match({ name: "John" }, { name: "Jo" }); // true
+```
 
-1. **[docs/API.md](./docs/API.md)** - All methods in one place
-2. **[docs/QUICK_REFERENCE.md](./docs/QUICK_REFERENCE.md)** - Quick lookup
+## Documentation
 
----
-
-## 📖 Documentation Files
-
-### Root Level Documentation
-
-| File                                       | Purpose                                 | Best For         |
-| ------------------------------------------ | --------------------------------------- | ---------------- |
-| **[README.md](./README.md)**               | Project overview, features, quick start | First-time users |
-| **[CONTRIBUTING.md](./CONTRIBUTING.md)**   | Development guide, code standards       | Contributors     |
-| **[DOCUMENTATION.md](./DOCUMENTATION.md)** | What's been documented                  | Project overview |
+- [README.md](../README.md) - Project overview
+- [KtCore.md](./KtCore.md) - Core module
+- [stringUtils.md](./stringUtils.md) - String utilities
+- [FilterChainFactory.md](./FilterChainFactory.md) - Filtering
+- [patterns.md](./patterns.md) - OOP patterns
+  | ------------------------------------------ | --------------------------------------- | ---------------- |
+  | **[README.md](./README.md)** | Project overview, features, quick start | First-time users |
+  | **[CONTRIBUTING.md](./CONTRIBUTING.md)** | Development guide, code standards | Contributors |
+  | **[DOCUMENTATION.md](./DOCUMENTATION.md)** | What's been documented | Project overview |
 
 ### Module Documentation (in `/docs`)
 

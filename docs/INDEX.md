@@ -1,53 +1,29 @@
-# KT-Core Documentation Overview
+# Documentation Index
 
-Welcome to the KT-Core documentation! This is the foundation library for the KT ecosystem, providing essential utilities for Adobe ExtendScript development.
+Complete reference guide for KT-Core modules and APIs.
 
-## 📚 Documentation Structure
+## Core Modules
 
-### Starting Points
+- [KT_Core](./KtCore.md) - Central module container
+- [KT_StringUtils](./stringUtils.md) - String matching utilities
+- [KT_FilterChainFactory](./FilterChainFactory.md) - Collection filtering
+- [Patterns](./patterns.md) - OOP patterns (via KT_Core.Paterns)
 
-1. **[README.md](./README.md)** - Start here!
-    - Project overview
-    - Quick examples
-    - Installation instructions
-    - Key features
+## Quick Links
 
-2. **[API.md](./docs/API.md)** - API Reference
-    - Complete API index
-    - All methods and signatures
-    - Quick lookup reference
+- [API Reference](./API.md) - All methods and signatures
+- [Getting Started](./START_HERE.md) - Quick start guide
+- [Main README](../README.md) - Project overview
 
-3. **[CONTRIBUTING.md](./CONTRIBUTING.md)** - Contributing Guide
-    - How to develop new features
-    - Code standards and patterns
-    - ExtendScript compatibility rules
-    - Testing and documentation requirements
+## Import Examples
 
-### Module Documentation
+```typescript
+// All-in-one
+import { KT_Core, KT_StringUtils, KT_FilterChainFactory } from "kt-core";
 
-Each module has detailed documentation in the `/docs` folder:
-
-#### 🔗 [KT_Core](./docs/KtCore.md)
-
-The main singleton container providing module composition and pattern access.
-
-**What it does:**
-
-- Singleton instance for accessing all utilities
-- Runtime module registration system
-- Entry point for the library
-
-**Key methods:**
-
-- `Module(name, module)` - Register modules
-- `init()` - Initialize core
-- `patterns` - Access pattern utilities
-
-#### 🔤 [String Utilities](./docs/stringUtils.md)
-
-Advanced string matching with case sensitivity and RegExp support.
-
-**What it does:**
+// Patterns via core
+const patterns = KT_Core.Paterns;
+```
 
 - Pattern matching (startsWith, endsWith, contains)
 - Exact equality checking

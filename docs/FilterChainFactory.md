@@ -1,52 +1,41 @@
-# KT_FilterChainFactory Module Documentation
+# KT_FilterChainFactory
 
-Advanced filtering system for collections using chainable filters and template-based customization. Supports multiple filter modes, RegExp patterns, and flexible matching logic.
+Template-based factory to build reusable filters for collections. Accepts a `FilterTemplate` mapping keys to modes or custom functions.
 
-## Table of Contents
+## API
 
-- [Overview](#overview)
-- [API Reference](#api-reference)
-- [Methods](#methods)
-- [Filter Modes](#filter-modes)
-- [Usage Examples](#usage-examples)
-- [Advanced Patterns](#advanced-patterns)
-- [Type Definitions](#type-definitions)
+| Method        | Signature                                                       | Returns                 | Notes                              |
+| ------------- | --------------------------------------------------------------- | ----------------------- | ---------------------------------- |
+| `constructor` | `(template: FilterTemplate)`                                    | `KT_FilterChainFactory` | Create factory with template       |
+| `sanitize`    | `(options: any): object`                                        | `object`                | Normalize options for repeated use |
+| `match`       | `(item: any, options: any, caseSensitive?: boolean): boolean`   | `boolean`               | Sanitize + filter convenience      |
+| `filter`      | `(item: any, sanitized: any, caseSensitive?: boolean): boolean` | `boolean`               | Apply sanitized filters to an item |
 
-## Overview
+Built-in modes: `exact`, `startsWith`, `endsWith`, `contains`. Custom mode functions have signature `(itemValue, filters, caseSensitive) => boolean`.
 
-`KT_FilterChainFactory` provides a sophisticated filtering system for collections. It uses a template-based approach where:
+## Example
 
-- **Templates** define how to filter based on specific properties
-- **Filter Modes** determine matching logic (exact, startsWith, endsWith, contains, custom)
-- **Common Modes** are built-in: `exact`, `startsWith`, `endsWith`, `contains`
-- **Custom Modes** allow domain-specific filtering logic
+```typescript
+import { KT_FilterChainFactory } from "kt-core";
 
-### Key Capabilities
+const factory = new KT_FilterChainFactory({
+    filename: "endsWith",
+    author: null,
+});
+const docs = [
+    { filename: "r.pdf", author: "A" },
+    { filename: "x.txt", author: "B" },
+];
+const results = [];
+for (let i = 0; i < docs.length; i++) {
+    if (factory.match(docs[i], { filename: ".pdf" })) results.push(docs[i]);
+}
+```
 
-🎯 **Flexible Matching**: Multiple filter types for different use cases  
-🎯 **Custom Filters**: Define domain-specific filtering logic  
-🎯 **Case Sensitivity**: Control strict vs. loose matching  
-🎯 **Multi-filter Support**: Chain multiple filters with AND logic  
-🎯 **Pattern Support**: Both string and RegExp patterns supported
+Notes:
 
-## API Reference
-
-### Constructor & Methods
-
-| Method          | Parameters                          | Returns   | Description                           |
-| --------------- | ----------------------------------- | --------- | ------------------------------------- |
-| `constructor()` | `template: FilterTemplate`          | -         | Create factory with filter definition |
-| `sanitize()`    | `options: any`                      | `object`  | Normalize filter options              |
-| `match()`       | `(item, options, caseSensitive?)`   | `boolean` | Check if item matches filters         |
-| `filter()`      | `(item, sanitized, caseSensitive?)` | `boolean` | Apply sanitized filters to item       |
-
-## Methods
-
-### `constructor(template: FilterTemplate)`
-
-Create a new filter factory with a custom template.
-
-**Signature:**
+- Prefer `sanitize()` when applying the same criteria to many items.
+- `caseSensitive` defaults to `true` unless explicitly set to `false`.
 
 ```typescript
 constructor(template: FilterTemplate)

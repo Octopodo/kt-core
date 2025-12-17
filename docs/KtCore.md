@@ -1,52 +1,40 @@
-# KT_Core Module Documentation
+# KT_Core
 
-The `KT_Core` module is the central singleton container for the kt-core library. It provides the main entry point and module composition system.
+Central singleton container for the library. Use it to register runtime modules and access shared utilities (patterns, etc.).
 
-## Table of Contents
+## API
 
-- [Overview](#overview)
-- [API Reference](#api-reference)
-- [Properties](#properties)
-- [Methods](#methods)
-- [Usage Examples](#usage-examples)
-- [Module System](#module-system)
+| Property / Method | Signature                             | Description                                                |
+| ----------------- | ------------------------------------- | ---------------------------------------------------------- |
+| `patterns`        | `KT_Paterns` (via `KT_Core.patterns`) | Access OOP helpers (Extend, Mixin, Clone, ExtendObject)    |
+| `Module`          | `(name: string, module: any): void`   | Register a module at runtime (assigned to `KT_Core[name]`) |
+| `init`            | `(): string`                          | Initialize core (returns module name)                      |
+| `salute`          | `(): void`                            | Show simple diagnostics (alerts/logs)                      |
 
-## Overview
-
-`KT_Core` is a singleton instance that serves as the root container for all kt-core functionality. It provides:
-
-- Access to the pattern system via `patterns` property
-- Runtime module registration via the `Module()` method
-- Initialization and diagnostic methods
-
-### Instance
+## Example
 
 ```typescript
-import { KT_Core } from "kt-core";
+import { KT_Core, KT_StringUtils } from "kt-core";
 
-// KT_Core is a singleton - always refers to the same instance
+// Register a module
+KT_Core.Module("Utils", {
+    greet(name: string) {
+        return "Hello " + name;
+    },
+});
+console.log((KT_Core as any).Utils.greet("World")); // Hello World
+
+// Use patterns via core
+KT_Core.patterns.Extend(
+    function Child() {},
+    function Parent() {}
+);
 ```
 
-## API Reference
+Notes:
 
-### Properties
-
-#### `patterns`
-
-**Type:** `KT_Paterns`
-
-Reference to the pattern system for object-oriented programming utilities.
-
-**Example:**
-
-```typescript
-const extended = KT_Core.patterns.Extend(Dog, Animal);
-const cloned = KT_Core.patterns.Clone(originalObject);
-```
-
-## Methods
-
-### `init()`
+- Access patterns through `KT_Core.patterns`. Do not import `Paterns` directly from the package root.
+- Keep module names unique to avoid registration conflicts.
 
 Initialize the KT_Core module and return its name.
 
