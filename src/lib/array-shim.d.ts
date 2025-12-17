@@ -33,22 +33,3 @@ interface ArrayConstructor {
     isArray(arg: any): arg is any[];
     from<T>(iterable: ArrayLike<T>): T[];
 }
-
-interface Object {
-    hasOwnProperty(prop: PropertyKey): boolean;
-    values<T extends object>(obj: T): T[keyof T][];
-}
-interface ObjectConstructor {
-    keys<T extends object>(obj: T): (keyof T)[];
-
-    getOwnPropertyDescriptor<T extends object>(
-        obj: T,
-        prop: PropertyKey
-    ): PropertyDescriptor | undefined;
-}
-
-interface String {
-    includes(searchString: string, position?: number): boolean;
-    toLowerCase(): string;
-    toUpperCase(): string;
-}

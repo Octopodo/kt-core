@@ -5,13 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Esbuild",
-            "program": "${workspaceFolder}/build-es3.js",
-            "request": "launch",
-            "skipFiles": ["<node_internals>/**"],
-            "type": "node"
-        },
-        {
             "type": "extendscript-debug",
             "request": "launch",
             "name": "IO Testing",

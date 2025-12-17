@@ -1,5 +1,3 @@
-import ts from "typescript";
-
 class KT_StringUtils {
     // Helper function to extract flags from RegExp as string (compatible with ExtendScript)
     private static getFlags(reg: RegExp): string {
