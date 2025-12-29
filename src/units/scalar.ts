@@ -1,4 +1,4 @@
-import { KT_ScalarUnit } from "./units";
+import { KT_ScalarUnit, KT_Unit } from "./units";
 
 /**
  * Agnostic Scalar (1D) Unit for After Effects and Premiere.
@@ -8,7 +8,7 @@ export class KT_Scalar extends KT_ScalarUnit {
         super(value, type);
     }
 
-    to(targetType: string, context?: any): KT_Scalar {
+    to(targetType: string, context?: any): KT_Unit<any> {
         if (this.type === targetType)
             return new KT_Scalar(this.value, this.type);
         throw new Error(

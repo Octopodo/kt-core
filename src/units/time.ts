@@ -1,54 +1,82 @@
 import { KT_Scalar } from "./scalar";
+import { KT_Unit } from "./units";
 
 /**
- * Agnostic Time Unit for After Effects and Premiere.
- * Supports 'seconds' and 'frames'.
+ * Agnostic Time Unit in Seconds.
  */
-export class KT_Time extends KT_Scalar {
-    constructor(value: number, type: "seconds" | "frames") {
-        super(value, type);
-        this.allowedTypes = ["seconds", "frames"];
+export class KT_Seconds extends KT_Scalar {
+    constructor(value: number) {
+        super(value, "seconds");
     }
 
-    to(targetType: "seconds" | "frames", context?: any): KT_Time {
-        if (this.type === targetType) {
-            return new KT_Time(this.value, this.type as any);
+    to(targetType: string, context?: any): KT_Unit<any> {
+        if (targetType === "seconds") {
+            return new KT_Seconds(this.value);
         }
 
-        let fps: number | undefined;
+        if (targetType === "frames") {
+            let fps: number | undefined;
+            if (typeof context === "number") {
+                fps = context;
+            } else if (context && typeof context.fps === "number") {
+                fps = context.fps;
+            }
 
-        if (typeof context === "number") {
-            fps = context;
-        } else if (context && typeof context.fps === "number") {
-            fps = context.fps;
+            if (fps === undefined) {
+                throw new Error(
+                    "KT_Seconds: Conversion to frames requires an FPS context."
+                );
+            }
+
+            return new KT_Frames(this.value * fps);
         }
 
-        if (fps === undefined) {
-            throw new Error(
-                `KT_Time: Conversion from ${this.type} to ${targetType} requires an FPS context.`
+        if (targetType === "percent") {
+            // Basic percent conversion if context is provided
+            if (context === undefined)
+                throw new Error(
+                    "KT_Seconds: Percent conversion requires context."
+                );
+            return new KT_Scalar(
+                (this.value / Number(context)) * 100,
+                "percent"
             );
         }
 
-        let newValue: number;
+        throw new Error(`KT_Seconds: Unsupported conversion to ${targetType}`);
+    }
+}
 
-        if (this.type === "seconds" && targetType === "frames") {
-            newValue = this.value * fps;
-        } else if (this.type === "frames" && targetType === "seconds") {
-            newValue = this.value / fps;
-        } else {
-            throw new Error(
-                `KT_Time: Unsupported conversion from ${this.type} to ${targetType}`
-            );
+/**
+ * Agnostic Time Unit in Frames.
+ */
+export class KT_Frames extends KT_Scalar {
+    constructor(value: number) {
+        super(value, "frames");
+    }
+
+    to(targetType: string, context?: any): KT_Unit<any> {
+        if (targetType === "frames") {
+            return new KT_Frames(this.value);
         }
 
-        return new KT_Time(newValue, targetType);
-    }
+        if (targetType === "seconds") {
+            let fps: number | undefined;
+            if (typeof context === "number") {
+                fps = context;
+            } else if (context && typeof context.fps === "number") {
+                fps = context.fps;
+            }
 
-    static seconds(val: number): KT_Time {
-        return new KT_Time(val, "seconds");
-    }
+            if (fps === undefined) {
+                throw new Error(
+                    "KT_Frames: Conversion to seconds requires an FPS context."
+                );
+            }
 
-    static frames(val: number): KT_Time {
-        return new KT_Time(val, "frames");
+            return new KT_Seconds(this.value / fps);
+        }
+
+        throw new Error(`KT_Frames: Unsupported conversion to ${targetType}`);
     }
 }

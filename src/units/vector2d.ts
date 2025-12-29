@@ -1,4 +1,4 @@
-import { KT_VectorUnit } from "./units";
+import { KT_VectorUnit, KT_Unit } from "./units";
 
 /**
  * Agnostic 2D Vector Unit for After Effects and Premiere.
@@ -18,7 +18,7 @@ export class KT_Vector2D extends KT_VectorUnit {
         return this.value[1];
     }
 
-    to(targetType: string, context?: any): KT_Vector2D {
+    to(targetType: string, context?: any): KT_Unit<any> {
         if (this.type === targetType)
             return new KT_Vector2D(this.value, this.type);
         throw new Error(

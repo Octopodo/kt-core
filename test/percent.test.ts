@@ -1,5 +1,5 @@
 import { it, expect, describe } from "kt-testing-suite-core";
-import { KT_Time, KT_Percent, KT_Vector2D, KT_Scalar } from "../src";
+import { KT_Seconds, KT_Percent, KT_Vector2D, KT_Scalar } from "../src";
 
 describe("Universal Percent Interaction", () => {
     describe("Percent + Scalar/Pixels", () => {
@@ -16,7 +16,7 @@ describe("Universal Percent Interaction", () => {
 
     describe("Percent + Time", () => {
         it("should add percentage to time", () => {
-            const duration = KT_Time.seconds(10);
+            const duration = new KT_Seconds(10);
             const extra = new KT_Percent(10); // 10%
 
             // 10s + 10% (of context 60s) = 10 + 6 = 16s

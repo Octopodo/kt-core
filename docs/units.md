@@ -15,7 +15,8 @@ Robust, scalable, and host-agnostic unit system for Adobe After Effects and Prem
     - [KT_Unit Methods](#kt_unit-methods)
     - [Math Operations](#math-operations)
 - [Specialized Adobe Units](#specialized-adobe-units)
-    - [KT_Time](#kt_time)
+    - [KT_Seconds](#kt_seconds)
+    - [KT_Frames](#kt_frames)
     - [KT_Color](#kt_color)
     - [KT_Rect](#kt_rect)
     - [KT_Timecode (Utility)](#kt_timecode-utility)
@@ -34,17 +35,18 @@ The system uses a tiered inheritance structure to optimize performance and type 
 
 ### Unit Specializations
 
-| Unit          | Parent          | Value Type | Description                                                       |
-| ------------- | --------------- | ---------- | ----------------------------------------------------------------- |
-| `KT_Scalar`   | `KT_ScalarUnit` | `number`   | Generic 1D unit (px, %, etc.).                                    |
-| `KT_Vector2D` | `KT_VectorUnit` | `number[]` | 2D vector for positions or scales.                                |
-| `KT_Vector3D` | `KT_VectorUnit` | `number[]` | 3D vector for 3D positions.                                       |
-| `KT_Time`     | `KT_Scalar`     | `number`   | Time in `seconds` or `frames`. Supports context-aware conversion. |
-| `KT_FPS`      | `KT_Scalar`     | `number`   | Frame rate helper.                                                |
-| `KT_Percent`  | `KT_ScalarUnit` | `number`   | Universal unit. Calculates absolute values based on context.      |
-| `KT_Angle`    | `KT_ScalarUnit` | `number`   | Rotation math (`deg` vs `rad`).                                   |
-| `KT_Color`    | `KT_VectorUnit` | `number[]` | RGBA colors. Supports `decimal` (0-1) and `8bit` (0-255).         |
-| `KT_Rect`     | `KT_VectorUnit` | `number[]` | Rectangle [x, y, w, h] with center calculation helpers.           |
+| Unit          | Parent          | Value Type | Description                                                  |
+| ------------- | --------------- | ---------- | ------------------------------------------------------------ |
+| `KT_Scalar`   | `KT_ScalarUnit` | `number`   | Generic 1D unit (px, %, etc.).                               |
+| `KT_Vector2D` | `KT_VectorUnit` | `number[]` | 2D vector for positions or scales.                           |
+| `KT_Vector3D` | `KT_VectorUnit` | `number[]` | 3D vector for 3D positions.                                  |
+| `KT_Seconds`  | `KT_Scalar`     | `number`   | Time unit in seconds. Supports conversion to frames.         |
+| `KT_Frames`   | `KT_Scalar`     | `number`   | Time unit in frames. Supports conversion to seconds.         |
+| `KT_FPS`      | `KT_Scalar`     | `number`   | Frame rate helper.                                           |
+| `KT_Percent`  | `KT_ScalarUnit` | `number`   | Universal unit. Calculates absolute values based on context. |
+| `KT_Angle`    | `KT_ScalarUnit` | `number`   | Rotation math (`deg` vs `rad`).                              |
+| `KT_Color`    | `KT_VectorUnit` | `number[]` | RGBA colors. Supports `decimal` (0-1) and `8bit` (0-255).    |
+| `KT_Rect`     | `KT_VectorUnit` | `number[]` | Rectangle [x, y, w, h] with center calculation helpers.      |
 
 ---
 
@@ -52,10 +54,10 @@ The system uses a tiered inheritance structure to optimize performance and type 
 
 ### Context-Aware Conversions
 
-Some units (like `KT_Time` or `KT_Percent`) require environmental context (FPS, reference size) to perform conversions during calculations.
+Some units (like `KT_Seconds` or `KT_Percent`) require environmental context (FPS, reference size) to perform conversions during calculations.
 
 ```typescript
-const oneSecond = KT_Time.seconds(1);
+const oneSecond = new KT_Seconds(1);
 const frames = oneSecond.to("frames", 24); // Context = 24 fps
 ```
 
@@ -107,7 +109,7 @@ Returns human-readable string. **Returns**: `string`.
 **Example**:
 
 ```typescript
-console.log(KT_Time.seconds(5).toString()); // "5 seconds"
+console.log(new KT_Seconds(5).toString()); // "5 seconds"
 ```
 
 #### `equals(unit, context?)`
@@ -122,8 +124,8 @@ Compares two units after conversion. **Returns**: `boolean`.
 **Example**:
 
 ```typescript
-const t1 = KT_Time.seconds(1);
-const t2 = KT_Time.frames(24);
+const t1 = new KT_Seconds(1);
+const t2 = new KT_Frames(24);
 console.log(t1.equals(t2, 24)); // true
 ```
 
@@ -170,17 +172,24 @@ const doubled = size.mul(2); // [200, 200]
 
 ## Specialized Adobe Units
 
-### KT_Time
+### KT_Seconds
 
-| Static Method  | Arguments     | Returns   | Description                     |
-| -------------- | ------------- | --------- | ------------------------------- |
-| `seconds(val)` | `val: number` | `KT_Time` | Creates a time unit in seconds. |
-| `frames(val)`  | `val: number` | `KT_Time` | Creates a time unit in frames.  |
+Unit for time in seconds.
 
 **Example**:
 
 ```typescript
-const t = KT_Time.seconds(2).add(KT_Time.frames(10), 24); // 2.416s
+const s = new KT_Seconds(2).add(new KT_Frames(12), 24); // 2.5s
+```
+
+### KT_Frames
+
+Unit for time in frames.
+
+**Example**:
+
+```typescript
+const f = new KT_Frames(24).add(new KT_Seconds(0.5), 24); // 36 frames
 ```
 
 ### KT_Color
@@ -228,7 +237,7 @@ console.log(box.centerX()); // 960
 
 #### `toTime(tc, fps)`
 
-Parses a timecode string. **Returns**: `KT_Time`.
+Parses a timecode string. **Returns**: `KT_Seconds`.
 
 | Name  | Type     | Default | Description                             |
 | ----- | -------- | ------- | --------------------------------------- |
@@ -238,20 +247,20 @@ Parses a timecode string. **Returns**: `KT_Time`.
 **Example**:
 
 ```typescript
-const time = KT_Timecode.toTime("00:00:01:00", 24); // 1.0s
+const time = KT_Timecode.toTime("00:00:01:00", 24); // new KT_Seconds(1.0)
 ```
 
 #### `toString(time, fps)`
 
 Formats time to string. **Returns**: `string`.
 
-| Name   | Type      | Default | Description                |
-| ------ | --------- | ------- | -------------------------- |
-| `time` | `KT_Time` | -       | The time object to format. |
-| `fps`  | `number`  | -       | Frame rate for formatting. |
+| Name   | Type              | Default | Description                                    |
+| ------ | ----------------- | ------- | ---------------------------------------------- |
+| `time` | `KT_Unit<number>` | -       | The time object to format (Seconds or Frames). |
+| `fps`  | `number`          | -       | Frame rate for formatting.                     |
 
 **Example**:
 
 ```typescript
-const tc = KT_Timecode.toString(KT_Time.seconds(1), 24); // "00:00:01:00"
+const tc = KT_Timecode.toString(new KT_Seconds(1), 24); // "00:00:01:00"
 ```

@@ -1,20 +1,21 @@
-import { KT_Time } from "./time";
+import { KT_Seconds, KT_Frames } from "./time";
+import { KT_Unit } from "./units";
 
 /**
  * Utility for parsing and formatting Adobe Timecode.
  */
 export class KT_Timecode {
     /**
-     * Formats a KT_Time object into a timecode string.
+     * Formats a time unit into a timecode string.
      */
-    static toString(time: KT_Time, fps: number): string {
+    static toString(time: KT_Unit<number>, fps: number): string {
         const totalSeconds = time.to("seconds", fps).value;
         const absSeconds = Math.abs(totalSeconds);
 
         const h = Math.floor(absSeconds / 3600);
         const m = Math.floor((absSeconds % 3600) / 60);
         const s = Math.floor(absSeconds % 60);
-        const f = Math.floor((absSeconds % 1) * fps);
+        const f = Math.floor(((absSeconds % 1) + 0.00001) * fps); // Small epsilon for precision
 
         const pad = (n: number) => (n < 10 ? "0" + n : n.toString());
 
@@ -25,11 +26,12 @@ export class KT_Timecode {
     }
 
     /**
-     * Parses a timecode string into a KT_Time object.
+     * Parses a timecode string into a KT_Seconds object.
      * Supports formats like "HH:MM:SS:FF" or "HH:MM:SS;FF" (drop frame).
      */
-    static toTime(tc: string, fps: number): KT_Time {
-        const parts = tc.replace(";", ":").split(":");
+    static toTime(tc: string, fps: number): KT_Seconds {
+        // ES3 safe way to replace all semicolons with colons before splitting
+        const parts = tc.split(";").join(":").split(":");
         if (parts.length !== 4) {
             throw new Error(
                 `KT_Timecode: Invalid timecode format "${tc}". Expected HH:MM:SS:FF`
@@ -42,6 +44,6 @@ export class KT_Timecode {
         const f = parseInt(parts[3], 10);
 
         const totalSeconds = h * 3600 + m * 60 + s + f / fps;
-        return KT_Time.seconds(totalSeconds);
+        return new KT_Seconds(totalSeconds);
     }
 }
