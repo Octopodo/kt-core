@@ -28,6 +28,7 @@ See `/docs` folder for detailed module documentation:
 - [KT_Core](./docs/KtCore.md)
 - [KT_StringUtils](./docs/stringUtils.md)
 - [KT_FilterChainFactory](./docs/FilterChainFactory.md)
+- [KT_Units](./docs/units.md)
 
 ## Compatibility
 
