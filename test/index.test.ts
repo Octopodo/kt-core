@@ -1,22 +1,13 @@
 import { runTests } from "kt-testing-suite-core";
 // import { KT_Core } from "../src";
-// import "./patterns.mixin.test";
-// import "./patterns.extendarray.test";
-// import "./array.test";
-// import "./string.test";
+import "./array.test";
+import "./string.test";
 import "./path.test";
+import "./unit.test";
+import "./agnostic-units.test";
+import "./time.test";
+import "./percent.test";
+import "./specialized.test";
 // import "./objectSpread.test";
-
-// function testMyRegexp() {
-//     const testRegexp = new RegExp("test/.*\\.test\\.ts$");
-//     const testLiteralRegexp = /test\/.*\.test\.ts$/;
-//     $.writeLine("Running tests matching:", testRegexp.toString());
-//     $.writeLine(
-//         "Running tests matching (literal):",
-//         testLiteralRegexp.toString()
-//     );
-// }
-
-// testMyRegexp();
 
 runTests();
